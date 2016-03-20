@@ -7,7 +7,8 @@
 
     <com.guidepage.customviews.HorizontalScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        >
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -15,7 +16,7 @@
             <ImageView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginLeft="30dp"
+                android:layout_marginLeft="60dp"
                 android:src="@drawable/pretty1"/>
         </LinearLayout>
         <View
@@ -26,7 +27,7 @@
         <ImageView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:paddingRight="30dp"
+            android:paddingRight="60dp"
             android:src="@drawable/pretty2" />
 
     </com.guidepage.customviews.HorizontalScrollView>

@@ -2,6 +2,7 @@ package com.guidepage.customviews;
 
 import android.content.Context;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.MotionEvent;
 import android.view.VelocityTracker;
@@ -14,6 +15,7 @@ import android.widget.Scroller;
  */
 public class HorizontalScrollView extends ViewGroup {
 
+    private static final String TAG = "HorizontalScrollView";
     int mChildIndex = 0;
     int mChildWidth;
     int mChildSize;
@@ -23,6 +25,7 @@ public class HorizontalScrollView extends ViewGroup {
     int mLastInterceptX;
     int mLastInterceptY;
     int mOffset;
+    boolean mIsInit = false;
 
     VelocityTracker mVelocityX;
     Scroller mScroller;
@@ -42,10 +45,17 @@ public class HorizontalScrollView extends ViewGroup {
         init();
     }
 
+    @Override
+    public void onWindowFocusChanged(boolean hasWindowFocus) {
+        super.onWindowFocusChanged(hasWindowFocus);
+        mIsInit = true;
+    }
+
+
     private void init() {
         mVelocityX = VelocityTracker.obtain();
         mScroller = new Scroller(getContext());
-        mOffset = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 30, getResources().getDisplayMetrics());
+        mOffset = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 60, getResources().getDisplayMetrics());
     }
 
     @Override
@@ -127,7 +137,7 @@ public class HorizontalScrollView extends ViewGroup {
                     offset = 0 - mOffset;
                 }
                 int dx = mChildIndex * mChildWidth - scrollX + offset;
-                setSmoothScroll(dx ,0);
+                setSmoothScroll(dx ,0, 500);
 
                 mVelocityX.clear();  //reset velocity
                 break;
@@ -176,6 +186,12 @@ public class HorizontalScrollView extends ViewGroup {
         int childLeft = 0;
         int childCount = getChildCount();
         mChildSize = childCount;
+        mChildWidth = getChildAt(0).getMeasuredWidth();
+
+       /* if(!mIsInit) {
+            childLeft += mChildWidth;
+            Log.d(TAG, "is not init");
+        }*/
 
         for(int i = 0; i < childCount; i++) {
             final View childView = getChildAt(i);
@@ -186,11 +202,11 @@ public class HorizontalScrollView extends ViewGroup {
                 childLeft += childWidth;
             }
         }
-        setSmoothScroll(mChildWidth, 0);
+        setSmoothScroll(mChildWidth, 0, 0);
     }
 
-    public void setSmoothScroll(int dx, int dy) {
-        mScroller.startScroll(getScrollX(), 0, dx, 0, 500);
+    public void setSmoothScroll(int dx, int dy, int time) {
+        mScroller.startScroll(getScrollX(), 0, dx, 0, time);
         invalidate();
     }
 
