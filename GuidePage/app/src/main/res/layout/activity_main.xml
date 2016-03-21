@@ -6,29 +6,44 @@
     tools:context="com.guidepage.MainActivity">
 
     <com.guidepage.customviews.HorizontalScrollView
+        android:id="@+id/parent"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        >
+        android:layout_height="match_parent">
 
-        <LinearLayout
+        <com.guidepage.customviews.ChildNotFollowView
+            android:id="@+id/first"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
+
             <ImageView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginLeft="60dp"
-                android:src="@drawable/pretty1"/>
-        </LinearLayout>
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="#003442" />
+                android:src="@drawable/pretty1" />
+        </com.guidepage.customviews.ChildNotFollowView>
 
-        <ImageView
+        <com.guidepage.customviews.ChildFollowView
+            android:id="@+id/middle"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:paddingRight="60dp"
-            android:src="@drawable/pretty2" />
+            android:layout_height="match_parent">
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="#003442" />
+        </com.guidepage.customviews.ChildFollowView>
+
+        <com.guidepage.customviews.ChildNotFollowView
+            android:id="@+id/last"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:paddingRight="60dp"
+                android:src="@drawable/pretty2" />
+        </com.guidepage.customviews.ChildNotFollowView>
 
     </com.guidepage.customviews.HorizontalScrollView>
 </LinearLayout>

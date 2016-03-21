@@ -16,7 +16,7 @@ import android.widget.Scroller;
 public class HorizontalScrollView extends ViewGroup {
 
     private static final String TAG = "HorizontalScrollView";
-    int mChildIndex = 0;
+    int mChildIndex = 1;
     int mChildWidth;
     int mChildSize;
 
@@ -51,11 +51,10 @@ public class HorizontalScrollView extends ViewGroup {
         mIsInit = true;
     }
 
-
     private void init() {
         mVelocityX = VelocityTracker.obtain();
         mScroller = new Scroller(getContext());
-        mOffset = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 60, getResources().getDisplayMetrics());
+        mOffset = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 100, getResources().getDisplayMetrics());
     }
 
     @Override
@@ -64,8 +63,22 @@ public class HorizontalScrollView extends ViewGroup {
         int x = (int) ev.getX();
         int y = (int) ev.getY();
         int action = ev.getAction();
+        if(action == MotionEvent.ACTION_DOWN) {
+            mLastX = x;
+            mLastY = y;
+            mLastInterceptX = x;
+            mLastInterceptY = y;
+            if (!mScroller.isFinished()) {
+                mScroller.abortAnimation();
+                return true;
+            }
 
-        switch (action) {
+            return false;
+        } else {
+            return true;
+        }
+
+      /*  switch (action) {
             case MotionEvent.ACTION_DOWN:
                 if (!mScroller.isFinished()) {
                     mScroller.abortAnimation();
@@ -86,13 +99,13 @@ public class HorizontalScrollView extends ViewGroup {
                 intercepted = false;
                 break;
         }
-
         mLastX = x;
         mLastY = y;
         mLastInterceptX = x;
         mLastInterceptY = y;
 
-        return intercepted;
+
+        return intercepted;*/
     }
 
     @Override
@@ -108,11 +121,19 @@ public class HorizontalScrollView extends ViewGroup {
                 }
                 break;
             case MotionEvent.ACTION_MOVE:
+                Log.d(TAG, "parent view is moving!");
                 int deltaX = x - mLastInterceptX;
                 scrollBy(-deltaX, 0);
                 break;
             case MotionEvent.ACTION_UP:
                 int scrollX = getScrollX();
+                if(mChildIndex == 0 || mChildIndex == 2) {
+                    int dx = mChildWidth * 1 - scrollX;
+                    setSmoothScroll(dx, 0 ,500);
+                    mChildIndex = 1;
+                    return true;
+                }
+
                 mVelocityX.computeCurrentVelocity(1000);
                 float velocityX = mVelocityX.getXVelocity();
                 int mLastChildIndex = mChildIndex;
