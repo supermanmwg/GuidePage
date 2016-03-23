@@ -16,6 +16,7 @@ import android.widget.Scroller;
 public class HorizontalScrollView extends ViewGroup {
 
     private static final String TAG = "HorizontalScrollView";
+    private static final int SCROLL_TIME = 300;
     int mChildIndex = 1;
     int mChildWidth;
     int mChildSize;
@@ -77,35 +78,6 @@ public class HorizontalScrollView extends ViewGroup {
         } else {
             return true;
         }
-
-      /*  switch (action) {
-            case MotionEvent.ACTION_DOWN:
-                if (!mScroller.isFinished()) {
-                    mScroller.abortAnimation();
-                    intercepted = true;
-                }
-                intercepted = false;
-                break;
-            case MotionEvent.ACTION_MOVE:
-                int deltx = x - mLastX;
-                int delty = y - mLastY;
-                if (Math.abs(deltx) > Math.abs(delty)) {
-                    intercepted = true;
-                } else {
-                    intercepted = false;
-                }
-                break;
-            case MotionEvent.ACTION_UP:
-                intercepted = false;
-                break;
-        }
-        mLastX = x;
-        mLastY = y;
-        mLastInterceptX = x;
-        mLastInterceptY = y;
-
-
-        return intercepted;*/
     }
 
     @Override
@@ -117,8 +89,10 @@ public class HorizontalScrollView extends ViewGroup {
         switch (action) {
             case MotionEvent.ACTION_DOWN:
                 if (!mScroller.isFinished()) {
+                    Log.d(TAG, "scroller is not finish!");
                     mScroller.abortAnimation();
                 }
+                Log.d(TAG, "get scroll x is " + getScrollX());
                 break;
             case MotionEvent.ACTION_MOVE:
                 Log.d(TAG, "parent view is moving!");
@@ -129,7 +103,7 @@ public class HorizontalScrollView extends ViewGroup {
                 int scrollX = getScrollX();
                 if(mChildIndex == 0 || mChildIndex == 2) {
                     int dx = mChildWidth * 1 - scrollX;
-                    setSmoothScroll(dx, 0 ,500);
+                    setSmoothScroll(dx, 0 ,SCROLL_TIME);
                     mChildIndex = 1;
                     return true;
                 }
@@ -147,18 +121,16 @@ public class HorizontalScrollView extends ViewGroup {
                 int offset = 0;
                 if(mLastChildIndex != 0 && mLastChildIndex != mChildSize - 1) {
                     offset =  (mLastChildIndex > mChildIndex ? mOffset :  0 - mOffset);
-
                 }
 
-                if(mChildIndex == 0 && mLastChildIndex == 0) {
-                    offset = mOffset;
+                if(1 == mChildIndex && 1 == mLastChildIndex) {
+                    offset = 0;
                 }
 
-                if(mChildIndex == mChildSize -1 && mLastChildIndex == mChildSize -1 ) {
-                    offset = 0 - mOffset;
-                }
+                Log.d(TAG, "child index is " + mChildIndex + ", last child index is " + mLastChildIndex
+                    + ",offset is " + offset);
                 int dx = mChildIndex * mChildWidth - scrollX + offset;
-                setSmoothScroll(dx ,0, 500);
+                setSmoothScroll(dx ,0, SCROLL_TIME);
 
                 mVelocityX.clear();  //reset velocity
                 break;
@@ -209,11 +181,6 @@ public class HorizontalScrollView extends ViewGroup {
         mChildSize = childCount;
         mChildWidth = getChildAt(0).getMeasuredWidth();
 
-       /* if(!mIsInit) {
-            childLeft += mChildWidth;
-            Log.d(TAG, "is not init");
-        }*/
-
         for(int i = 0; i < childCount; i++) {
             final View childView = getChildAt(i);
             if(childView.getVisibility() != View.GONE) {
@@ -223,7 +190,12 @@ public class HorizontalScrollView extends ViewGroup {
                 childLeft += childWidth;
             }
         }
-        setSmoothScroll(mChildWidth, 0, 0);
+        Log.d(TAG, "onLayout");
+        int time = 0;
+        if(mChildIndex  == 1) {
+            time = SCROLL_TIME;
+        }
+        setSmoothScroll(mChildWidth - getScrollX(), 0, time);
     }
 
     public void setSmoothScroll(int dx, int dy, int time) {
@@ -243,5 +215,25 @@ public class HorizontalScrollView extends ViewGroup {
     protected void onDetachedFromWindow() {
         mVelocityX.recycle();
         super.onDetachedFromWindow();
+    }
+
+    public void goToChild1() {
+        int dx = mChildWidth * 0 - getScrollX() - mOffset;
+        setSmoothScroll(dx, 0, SCROLL_TIME);
+        mChildIndex = 0;
+    }
+
+    public void goToChild2() {
+        Log.d(TAG, "mOffset is " + mOffset + ", scroll x "  +getScrollX());
+        int dx = mChildWidth * 1 - getScrollX();
+        setSmoothScroll(dx, 0, SCROLL_TIME);
+        mChildIndex = 1;
+    }
+
+    public void goToChild3() {
+        Log.d(TAG, "mOffset is " + mOffset + ", scroll x "  +getScrollX());
+        int dx = mChildWidth * 2 - getScrollX()- mOffset;
+        setSmoothScroll(dx, 0, SCROLL_TIME);
+        mChildIndex = 2;
     }
 }

@@ -10,27 +10,13 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <com.guidepage.customviews.ChildNotFollowView
-            android:id="@+id/first"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-            <ImageView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginLeft="60dp"
-                android:src="@drawable/pretty1" />
-        </com.guidepage.customviews.ChildNotFollowView>
+        <include layout="@layout/first_view" />
 
         <com.guidepage.customviews.ChildFollowView
             android:id="@+id/middle"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="#003442" />
         </com.guidepage.customviews.ChildFollowView>
 
         <com.guidepage.customviews.ChildNotFollowView
@@ -41,7 +27,7 @@
             <ImageView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:paddingRight="60dp"
+                android:paddingRight="100dp"
                 android:src="@drawable/pretty2" />
         </com.guidepage.customviews.ChildNotFollowView>
 

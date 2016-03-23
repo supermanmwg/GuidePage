@@ -3,12 +3,13 @@ package com.guidepage.customviews;
 import android.content.Context;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
+import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 
 /**
  * Created by weiguangmeng on 16/3/21.
  */
-public class ChildFollowView extends LinearLayout {
+public class ChildFollowView extends FrameLayout {
     private HorizontalScrollView horizontalScrollView;
 
     public ChildFollowView(Context context) {
