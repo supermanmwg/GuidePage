@@ -27,7 +27,6 @@ public class ChildFollowView extends FrameLayout {
                 horizontalScrollView.requestDisallowInterceptTouchEvent(true);
                 break;
             case MotionEvent.ACTION_MOVE:
-                horizontalScrollView.requestDisallowInterceptTouchEvent(false);
                 break;
             case MotionEvent.ACTION_UP:
                 break;

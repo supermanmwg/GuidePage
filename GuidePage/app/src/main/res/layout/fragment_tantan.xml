@@ -3,6 +3,14 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/tantan"
+    android:gravity="center_horizontal"
     android:orientation="vertical">
+
+    <ImageView
+        android:id="@+id/rectangle"
+        android:layout_width="700dp"
+        android:layout_height="700dp"
+        android:background="#123456"
+        android:layout_marginTop="50dp"/>
 
 </LinearLayout>
