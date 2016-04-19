@@ -1,11 +1,13 @@
 package com.guidepage;
 
+import android.os.PersistableBundle;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Toast;
@@ -32,6 +34,12 @@ public class MainActivity extends AppCompatActivity implements View.OnTouchListe
     private View setting;
     private View freshGuide;
     private View recommend;
+
+    @Override
+    public void onCreate(Bundle savedInstanceState, PersistableBundle persistentState) {
+        super.onCreate(savedInstanceState, persistentState);
+        Log.d("haha", "persistent");
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
