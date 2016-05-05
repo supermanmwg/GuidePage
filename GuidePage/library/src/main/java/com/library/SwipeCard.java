@@ -3,6 +3,7 @@ package com.library;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Adapter;
@@ -11,6 +12,7 @@ import android.widget.Adapter;
  * Created by weiguangmeng on 16/4/19.
  */
 public class SwipeCard extends ViewGroup {
+    private static String TAG = "SwipeCard";
 
     private static final float DEFAULT_SCALE = 1.0f;
     private static final float DEFAULT_STATIC_ROTATION = 0;
@@ -70,12 +72,14 @@ public class SwipeCard extends ViewGroup {
 
     @Override
     protected void onLayout(boolean changed, int l, int t, int r, int b) {
+        Log.d(TAG, "onLayout");
         if(adapter == null || adapter.isEmpty()) {
             mCurrentIndex = 0;
-            removeAllViewsInLayout();  //
+            removeAllViewsInLayout();
         }
 
-        for(int i = 0; i < stackSize && mCurrentIndex < adapter.getCount(); i++) {
+       for(int i = getChildCount(); i < stackSize && mCurrentIndex < adapter.getCount(); i++) {
+            Log.d(TAG, "i is " + i + ", mCurrent index is " + mCurrentIndex);
             addNewItem();
         }
 
@@ -125,16 +129,18 @@ public class SwipeCard extends ViewGroup {
 
     private void reOrderItems() {
        int topViewIndex = getChildCount() - 1;
+        Log.d(TAG, "child count is " + getChildCount());
 
         for(int i = getChildCount() - 1; i>=0 ; i--) {
             View childView = getChildAt(i);    //
 
             int viewPosY = getPaddingTop() + (topViewIndex - i) * interval;
-            int viewPosX = (getWidth() - childView.getWidth())/2;
-
+            int viewPosX = (getWidth() - childView.getMeasuredWidth())/2;
+            Log.d(TAG, "view pos x is " + viewPosX + ",view pos y is " + viewPosY);
             childView.layout(viewPosX, 0, viewPosX + childView.getMeasuredWidth(), childView.getMeasuredHeight());
 
             if(topViewIndex == i) {
+                swipeHelper.unregisterObservedView();
                 topView = childView;
                 swipeHelper.register(this, topView, viewPosX, viewPosY);
             }
@@ -152,12 +158,14 @@ public class SwipeCard extends ViewGroup {
                 childView.animate()
                         .alpha(1)
                         .y(viewPosY)
+                        .x(viewPosX)
                         .rotation(staticRotation)
                         .scaleX(scale)
                         .scaleY(scale)
                         .setDuration(duration);
 
             } else {
+                childView.setTag(R.id.is_new_card, false);
                 childView.setY(viewPosY);
                 childView.setScaleX(scale);
                 childView.setScaleY(scale);

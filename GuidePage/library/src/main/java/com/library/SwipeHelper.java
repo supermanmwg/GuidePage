@@ -26,6 +26,13 @@ public class SwipeHelper implements View.OnTouchListener {
         obserView.setOnTouchListener(this);
     }
 
+    public void unregisterObservedView() {
+        if (obserView != null) {
+            obserView.setOnTouchListener(null);
+        }
+        obserView = null;
+    }
+
     @Override
     public boolean onTouch(View v, MotionEvent event) {
         int action = event.getAction();
