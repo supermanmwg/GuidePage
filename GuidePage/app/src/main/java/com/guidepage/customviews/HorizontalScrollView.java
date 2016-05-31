@@ -60,7 +60,6 @@ public class HorizontalScrollView extends ViewGroup {
 
     @Override
     public boolean onInterceptTouchEvent(MotionEvent ev) {
-        boolean intercepted = false;
         int x = (int) ev.getX();
         int y = (int) ev.getY();
         int action = ev.getAction();
@@ -69,11 +68,8 @@ public class HorizontalScrollView extends ViewGroup {
             mLastY = y;
             mLastInterceptX = x;
             mLastInterceptY = y;
-            if (!mScroller.isFinished()) {
-                mScroller.abortAnimation();
-                return true;
-            }
 
+            Log.d(TAG, "action down intercepted false");
             return false;
         } else {
             return true;
@@ -93,7 +89,6 @@ public class HorizontalScrollView extends ViewGroup {
                     mScroller.abortAnimation();
                 }
                 Log.d(TAG, "get scroll x is " + getScrollX());
-                break;
             case MotionEvent.ACTION_MOVE:
                 Log.d(TAG, "parent view is moving!");
                 int deltaX = x - mLastInterceptX;

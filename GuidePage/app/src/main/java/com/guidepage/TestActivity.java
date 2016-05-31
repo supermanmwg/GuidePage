@@ -1,39 +1,35 @@
-package com.guidepage.fragments;
+package com.guidepage;
 
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.view.LayoutInflater;
+import android.os.PersistableBundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Adapter;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
-import com.guidepage.R;
 import com.library.SwipeCard;
 
 import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by weiguangmeng on 16/3/23.
+ * Created by mwg on 16-5-5.
  */
-public class tantanFragment extends Fragment {
+public class TestActivity extends AppCompatActivity {
 
     SwipeCard swipeCard;
 
     private ArrayList<String> mData;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_tantan, container, false);
-        swipeCard = (SwipeCard) view.findViewById(R.id.swipe_card);
-        return view;
-    }
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
 
-    @Override
-    public void onActivityCreated(Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
+        setContentView(R.layout.activity_test);
+
+        swipeCard = (SwipeCard)findViewById(R.id.swipe_card);
 
         mData = new ArrayList<>();
         Adapter adapter = new SwipeStackAdapter(mData);
@@ -74,7 +70,7 @@ public class tantanFragment extends Fragment {
         @Override
         public View getView(final int position, View convertView, ViewGroup parent) {
             if (convertView == null) {
-                convertView =getLayoutInflater(null).inflate(R.layout.card, parent, false);
+                convertView =getLayoutInflater().inflate(R.layout.card, parent, false);
             }
 
             TextView textViewCard = (TextView) convertView.findViewById(R.id.textViewCard);

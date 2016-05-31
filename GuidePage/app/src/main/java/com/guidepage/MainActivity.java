@@ -21,7 +21,7 @@ import com.guidepage.fragments.recommedFragment;
 import com.guidepage.fragments.settingFragment;
 import com.guidepage.fragments.tantanFragment;
 
-public class MainActivity extends AppCompatActivity implements View.OnTouchListener {
+public class MainActivity extends AppCompatActivity  {
 
     private HorizontalScrollView horizontalScrollView;
     private ChildFollowView middle;
@@ -44,8 +44,8 @@ public class MainActivity extends AppCompatActivity implements View.OnTouchListe
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        ActionBar actionBar= getSupportActionBar();
-        if(null != actionBar) {
+        ActionBar actionBar = getSupportActionBar();
+        if (null != actionBar) {
             actionBar.hide();
         }
         setContentView(R.layout.activity_main);
@@ -118,9 +118,6 @@ public class MainActivity extends AppCompatActivity implements View.OnTouchListe
         middle.setHorizontalScrollView(horizontalScrollView);
         first.setHorizontalScrollView(horizontalScrollView);
         last.setHorizontalScrollView(horizontalScrollView);
-
-        first.setOnTouchListener(this);
-        last.setOnTouchListener(this);
     }
 
     private void  setMiddle(Fragment fragment, boolean onStack) {
@@ -131,10 +128,5 @@ public class MainActivity extends AppCompatActivity implements View.OnTouchListe
             fragmentTransaction.addToBackStack(null);
         }
         fragmentTransaction.commit();
-    }
-
-    @Override
-    public boolean onTouch(View v, MotionEvent event) {
-        return true;
     }
 }

@@ -1,6 +1,7 @@
 package com.library;
 
 import android.animation.Animator;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 
@@ -8,6 +9,7 @@ import android.view.View;
  * Created by weiguangmeng on 16/4/19.
  */
 public class SwipeHelper implements View.OnTouchListener {
+    private static final String TAG = " SwipeHelper";
     private SwipeCard swipeCard;
     private View obserView;
     private int initX;
@@ -42,7 +44,7 @@ public class SwipeHelper implements View.OnTouchListener {
 
         switch(action) {
             case MotionEvent.ACTION_DOWN:
-                v.getParent().requestDisallowInterceptTouchEvent(true);
+                Log.d(TAG, "swipe is action down");
                 mDownX = x;
                 mDownY = y;
                 break;
@@ -56,8 +58,6 @@ public class SwipeHelper implements View.OnTouchListener {
                 obserView.setY(newY);
                 break;
             case MotionEvent.ACTION_UP:
-                v.getParent().requestDisallowInterceptTouchEvent(false);
-
                 int distanceX = x - mDownX;
                 int interval = swipeCard.getWidth() / 3;
 

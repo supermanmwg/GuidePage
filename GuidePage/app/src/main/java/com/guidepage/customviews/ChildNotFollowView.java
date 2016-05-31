@@ -38,6 +38,7 @@ public class ChildNotFollowView extends LinearLayout {
             default:
                 break;
         }
+
         return super.dispatchTouchEvent(ev);
     }
 
@@ -46,4 +47,8 @@ public class ChildNotFollowView extends LinearLayout {
         this.horizontalScrollView = horizontalScrollView;
     }
 
+    @Override
+    public boolean onTouchEvent(MotionEvent event) {
+        return true;
+    }
 }
